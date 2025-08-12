@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { listAllMyPurchasedCoursesApi } from "@/api/courseApis";
 import { Loader2, ShoppingBag } from "lucide-react";
 import CourseCard from "@/components/dashboard/cards/courseCard/CourseCard";
@@ -17,36 +17,30 @@ const Page = () => {
 
   const { toasts, removeToast, error: showError } = useToast();
 
-  const fetchCourses = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      const res = await listAllMyPurchasedCoursesApi();
-
-      if (res?.status) {
-        if (res.data && res.data.length > 0) {
-          setCourses(res.data);
-        } else {
-          // No courses found, clear error and let UI show EmptyState
-          setCourses([]);
-          setError(null);
-        }
-      } else {
-        const errorMessage =
-          res?.message || "Failed to fetch purchased courses";
-        setError(errorMessage);
-        showError(errorMessage);
-      }
-    } catch (err: any) {
-      const errorMessage =
-        err.message || "Something went wrong while fetching your courses";
+  const fetchCourses = useCallback(async () => {
+  try {
+    setLoading(true);
+    setError(null);
+    const res = await listAllMyPurchasedCoursesApi();
+    if (res?.status) {
+      setCourses(res.data || []);
+    } else {
+      const errorMessage = res?.message || "Failed to fetch purchased courses";
       setError(errorMessage);
       showError(errorMessage);
-    } finally {
-      setLoading(false);
     }
-  };
+  } catch (err: any) {
+    const errorMessage = err.message || "Something went wrong while fetching your courses";
+    setError(errorMessage);
+    showError(errorMessage);
+  } finally {
+    setLoading(false);
+  }
+}, [showError]); // Add any real deps here
+
+useEffect(() => {
+  fetchCourses();
+}, [fetchCourses]);
 
   const handleWatchMaterial = async (courseId: string, materialId: string) => {
     try {
@@ -61,9 +55,9 @@ const Page = () => {
     }
   };
 
-  useEffect(() => {
-    fetchCourses();
-  }, []);
+  // useEffect(() => {
+  //   fetchCourses();
+  // }, []);
 
   const handleRetry = () => {
     fetchCourses();

@@ -59,16 +59,7 @@ const Toast: React.FC<ToastProps> = ({ toast, onClose }) => {
   };
 
   const styles = getToastStyles(toast.type);
-  
-  const getTitle = (type: ToastType['type']) => {
-    switch (type) {
-      case 'success': return 'Success';
-      case 'error': return 'Error';
-      case 'warning': return 'Warning';
-      case 'info': return 'Info';
-      default: return 'Notification';
-    }
-  };
+
 
   return (
     <div className={`max-w-sm w-full transform transition-all duration-300 ease-in-out ${styles.container} border rounded-lg shadow-lg p-4 mb-2`}>

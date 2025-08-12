@@ -13,9 +13,8 @@ export default function Page() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [enrollingId, setEnrollingId] = useState<string | null>(null);
 
-  const { toasts, removeToast, error: showError } = useToast();
+  const { toasts, removeToast } = useToast();
 
  const fetchCourses = async () => {
   try {
@@ -126,7 +125,6 @@ export default function Page() {
                 materials={course.materials || []}
                 createdAt={course.createdAt}
                 session={course.session}
-                loading={enrollingId === course._id}
                 hideInstructor={true}
                 showSessionInfo={true}
               />

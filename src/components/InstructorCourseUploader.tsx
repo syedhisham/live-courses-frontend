@@ -174,12 +174,6 @@ export default function InstructorCourseUploader() {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
 
-  const getMinDateTime = () => {
-    const now = new Date();
-    now.setHours(now.getHours() + 1); // Minimum 1 hour from now
-    return now.toISOString().slice(0, 16);
-  };
-
   return (
     <div className="min-h-screen bg-white dark:bg-zinc-900 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
@@ -667,7 +661,7 @@ export default function InstructorCourseUploader() {
                     Course Created Successfully!
                   </h3>
                   <p className="text-zinc-600 dark:text-zinc-400 mb-6">
-                    Your course "{course.title}" has been created with{" "}
+                    Your course &quot;{course.title}&quot; has been created with{" "}
                     {materials.length} materials and a live session scheduled.
                   </p>
                   <div className="p-4 bg-zinc-50 dark:bg-zinc-800 rounded-xl border border-zinc-200 dark:border-zinc-700 inline-block">
