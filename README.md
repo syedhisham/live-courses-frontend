@@ -60,7 +60,7 @@ This frontend app provides the user interface for the secure online learning pla
    ```bash
    git clone https://github.com/syedhisham/live-courses-frontend.git
    cd live-courses-frontend
-````
+```
 
 2. Install dependencies:
 
