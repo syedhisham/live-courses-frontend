@@ -1,7 +1,7 @@
 import axiosInstance from "@/utils/axiosInterceptor";
 import axios from "axios";
 
-export const listAllCoursesApi = async (page = 1) => {
+export const listAllCoursesApi = async () => {
   try {
     const res = await axiosInstance.get('/courses/list');
     return res.data;
@@ -84,6 +84,18 @@ export const getMaterialAccessUrlApi = async (courseId: string, materialId: stri
       throw new Error(error.response?.data?.message || error.message);
     }
     throw new Error("Error in fetching access url");
+  }
+};
+
+export const fetchInstructorCoursesApi = async () => {
+  try {
+    const res = await axiosInstance.get("/courses/instructor");
+    return res.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || error.message);
+    }
+    throw new Error("Error in fetching instructor added courses");
   }
 };
 

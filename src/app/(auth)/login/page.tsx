@@ -38,9 +38,9 @@ function LoginForm() {
       // Small delay to show the success message before redirect
       setTimeout(() => {
         if (role === "instructor") {
-          router.push("/dashboard/instructor");
+          router.push("/dashboard/instructor/courses");
         } else {
-          router.push("/dashboard/student");
+          router.push("/dashboard/student/courses");
         }
       }, 1000);
 

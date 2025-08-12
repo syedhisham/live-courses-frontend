@@ -25,7 +25,7 @@ export default function DashboardHeader({ onToggleSidebar, isSidebarOpen }: Dash
     try {
       await logoutApi();
       dispatch(clearUser());
-      router.push("/login");
+      router.push("/");
     } catch (error) {
       console.error("Logout failed:", error);
     } finally {

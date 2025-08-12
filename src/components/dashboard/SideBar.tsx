@@ -19,11 +19,6 @@ import { RootState } from "@/store";
 // Define tabs for different user roles
 const instructorTabs = [
   {
-    label: "Dashboard",
-    href: "/dashboard/instructor",
-    icon: LayoutDashboard,
-  },
-  {
     label: "Add Course",
     href: "/dashboard/instructor/addcourse",
     icon: Plus,
@@ -33,19 +28,9 @@ const instructorTabs = [
     href: "/dashboard/instructor/courses",
     icon: BookOpen,
   },
-  {
-    label: "Profile",
-    href: "/dashboard/instructor/profile",
-    icon: User,
-  },
 ];
 
 const studentTabs = [
-  {
-    label: "Dashboard",
-    href: "/dashboard/student",
-    icon: LayoutDashboard,
-  },
   {
     label: "My Courses",
     href: "/dashboard/student/courses",
@@ -55,11 +40,6 @@ const studentTabs = [
     label: "Browse Courses",
     href: "/dashboard/student/browse",
     icon: Search,
-  },
-  {
-    label: "Profile",
-    href: "/dashboard/student/profile",
-    icon: User,
   },
 ];
 

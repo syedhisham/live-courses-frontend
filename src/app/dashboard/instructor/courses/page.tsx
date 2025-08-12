@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { listAllCoursesApi } from "@/api/courseApis";
+import { fetchInstructorCoursesApi } from "@/api/courseApis";
 import CourseCard from "@/components/dashboard/cards/courseCard/CourseCard";
 import { Loader2, ShoppingBag } from "lucide-react";
-import { createCheckoutSessionApi } from "@/api/paymentApis";
 import { useToast } from "@/hooks/useToast";
 import ToastContainer from "@/components/ui/ToastContainer";
 import ErrorState from "@/components/ui/ErrorState";
@@ -16,14 +15,14 @@ export default function Page() {
   const [error, setError] = useState<string | null>(null);
   const [enrollingId, setEnrollingId] = useState<string | null>(null);
 
-  const { toasts, removeToast, success, error: showError } = useToast();
+  const { toasts, removeToast, error: showError } = useToast();
 
  const fetchCourses = async () => {
   try {
     setLoading(true);
     setError(null);
 
-    const res = await listAllCoursesApi();
+    const res = await fetchInstructorCoursesApi();
 
     if (res?.status) {
       if (Array.isArray(res.data) && res.data.length > 0) {
@@ -54,28 +53,7 @@ export default function Page() {
     fetchCourses();
   }, []);
 
-  const handleEnroll = async (course: any) => {
-    try {
-      setEnrollingId(course._id);
 
-      const session = await createCheckoutSessionApi({
-        courseId: course._id,
-      });
-
-      if (session?.data?.url) {
-        success("Redirecting to checkout...");
-        window.location.href = session?.data?.url;
-      } else {
-        throw new Error("Invalid checkout session response. Please try again.");
-      }
-    } catch (err: any) {
-      const errorMessage =
-        err.message || "Failed to start checkout. Please try again.";
-      showError(errorMessage);
-    } finally {
-      setEnrollingId(null);
-    }
-  };
 
   const handleRetry = () => {
     fetchCourses();
@@ -93,6 +71,8 @@ export default function Page() {
   if (error) {
     return <ErrorState error={error} onRetry={handleRetry} />;
   }
+
+  
 
   return (
     <>
@@ -120,7 +100,7 @@ export default function Page() {
           </div>
         )}
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-semibold">Available Courses</h1>
+          <h1 className="text-2xl font-semibold">My Courses</h1>
           <div className="flex items-center gap-2 text-sm text-gray-600">
             <ShoppingBag className="w-4 h-4" />
             <span>
@@ -131,8 +111,8 @@ export default function Page() {
 
         {courses.length === 0 ? (
           <EmptyState
-            title="No courses available"
-            description="There are no courses available at the moment. Please check back later."
+            title="No courses created yet"
+            description="You haven't created any courses yet. Start by creating your first course to share your knowledge with students."
           />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 scroll-smooth">
@@ -142,13 +122,13 @@ export default function Page() {
                 title={course.title}
                 description={course.description}
                 price={course.price}
-                instructor={course.instructor?.name || "Unknown Instructor"}
+                instructor={course.instructor?.name}
                 materials={course.materials || []}
                 createdAt={course.createdAt}
-                onEnroll={() => handleEnroll(course)}
+                session={course.session}
                 loading={enrollingId === course._id}
-                hideMaterials={true}
                 hideInstructor={true}
+                showSessionInfo={true}
               />
             ))}
           </div>

@@ -25,18 +25,19 @@ const Page = () => {
       const res = await listAllMyPurchasedCoursesApi();
 
       if (res?.status) {
-  if (res.data && res.data.length > 0) {
-    setCourses(res.data);
-  } else {
-    // No courses found, clear error and let UI show EmptyState
-    setCourses([]);
-    setError(null);
-  }
-} else {
-  const errorMessage = res?.message || "Failed to fetch purchased courses";
-  setError(errorMessage);
-  showError(errorMessage);
-}
+        if (res.data && res.data.length > 0) {
+          setCourses(res.data);
+        } else {
+          // No courses found, clear error and let UI show EmptyState
+          setCourses([]);
+          setError(null);
+        }
+      } else {
+        const errorMessage =
+          res?.message || "Failed to fetch purchased courses";
+        setError(errorMessage);
+        showError(errorMessage);
+      }
     } catch (err: any) {
       const errorMessage =
         err.message || "Something went wrong while fetching your courses";
@@ -64,7 +65,6 @@ const Page = () => {
     fetchCourses();
   }, []);
 
-
   const handleRetry = () => {
     fetchCourses();
   };
@@ -82,7 +82,7 @@ const Page = () => {
     return <ErrorState error={error} onRetry={handleRetry} />;
   }
 
-    if (courses.length === 0) {
+  if (courses.length === 0) {
     return (
       <>
         <EmptyState
@@ -155,12 +155,15 @@ const Page = () => {
                 price={course.price}
                 instructor={course.instructor?.name || "Unknown Instructor"}
                 materials={course.materials || []}
+                session={course.sessions && course.sessions.length > 0 ? course.sessions[0] : null}
                 onWatchMaterial={(materialId: string) =>
                   handleWatchMaterial(course._id, materialId)
                 }
                 createdAt={course.createdAt}
                 showWatchButtons={true}
-                hideMaterials={true}
+                hideMaterials={false}
+                hideInstructor={false}
+                showSessionInfoForStudent={true}
               />
             ))}
           </div>
