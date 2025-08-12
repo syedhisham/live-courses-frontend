@@ -10,8 +10,8 @@ import {
   ChevronLeft,
   ChevronRight,
   BookOpen,
-  Users,
   GraduationCap,
+  Search,
 } from "lucide-react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
@@ -52,9 +52,9 @@ const studentTabs = [
     icon: BookOpen,
   },
   {
-    label: "Browse",
+    label: "Browse Courses",
     href: "/dashboard/student/browse",
-    icon: Users,
+    icon: Search,
   },
   {
     label: "Profile",

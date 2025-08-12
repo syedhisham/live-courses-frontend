@@ -1,9 +1,10 @@
+import InstructorCourseUploader from '@/components/InstructorCourseUploader'
 import React from 'react'
 
 const Page = () => {
   return (
     <div>
-      Add course content
+     <InstructorCourseUploader />
     </div>
   )
 }

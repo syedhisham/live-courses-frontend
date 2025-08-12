@@ -18,7 +18,7 @@ function PaymentSuccess() {
 
   const handleGoToCourses = () => {
     setIsLoading(true);
-    router.push("/dashboard/student/courses");
+    router.push("/dashboard/student/browse");
   };
 
   return (
@@ -46,7 +46,7 @@ function PaymentSuccess() {
         <button
           onClick={handleGoToCourses}
           disabled={isLoading}
-          className={`mt-8 w-full sm:w-auto px-6 py-3 rounded-lg font-medium shadow transition 
+          className={`mt-8 w-full sm:w-auto px-6 py-3 rounded-lg font-medium shadow transition cursor-pointer 
             ${
               isLoading
                 ? "bg-gray-400 text-white cursor-not-allowed"
@@ -54,7 +54,7 @@ function PaymentSuccess() {
             }
           `}
         >
-          {isLoading ? "Redirecting..." : "Go to My Courses"}
+          {isLoading ? "Redirecting..." : "Browse Courses"}
         </button>
       </div>
     </div>
